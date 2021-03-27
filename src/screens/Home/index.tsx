@@ -1,14 +1,19 @@
-import React, { useCallback, useEffect } from "react";
-import { FlatList } from "react-native";
+import React, { useCallback, useEffect } from 'react';
+import { FlatList } from 'react-native';
 
-import { useStore, useDispatch } from "../../store";
+import { useStore, useDispatch } from '../../store';
 
-import { Image, View, Background } from './styles';
+import { View, Background } from './styles';
+
+import Image from '../../components/Image';
 
 export default function Home() {
   const { posts, loading } = useStore();
   const dispatch = useDispatch();
-  const renderItem = useCallback(({ item }) => <Image source={item.url} />, []);
+  const renderItem = useCallback(
+    ({ item }) => <Image title={item.title} url={item.url} />,
+    []
+  );
 
   useEffect(() => {
     if (loading) {
