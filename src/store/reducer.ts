@@ -7,6 +7,7 @@ export interface Post {
 export interface State {
   posts: Post[];
   loading: boolean;
+  error?: string;
 }
 
 /**
@@ -26,16 +27,27 @@ export interface Action {
 
 export default function reducer(state: State, action: Action) {
   switch (action.type) {
+    case 'GET_POSTS_REQUEST':
+      return {
+        ...state,
+        loading: true,
+      };
     case 'GET_POSTS_SUCCESS':
       return {
         ...state,
         loading: false,
         posts: action.payload,
       };
+    case 'GET_POSTS_FAILED':
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     case 'SET_LOADING':
       return {
         ...state,
-        isLoading: action.payload,
+        loading: action.payload,
       };
     default:
       return state;

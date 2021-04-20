@@ -1,4 +1,10 @@
-import React, { createContext, Dispatch, useContext, useReducer } from 'react';
+import React, {
+  createContext,
+  Dispatch,
+  useContext,
+  useEffect,
+  useReducer,
+} from 'react';
 
 import reducer, { State, Action } from './reducer';
 
@@ -11,8 +17,9 @@ interface Dispatcher {
 
 const StoreContext = createContext<State>({
   posts: [],
-  loading: true,
+  loading: false,
 });
+
 const DispatchContext = createContext<Dispatcher>({
   setLoading: () => {},
   getPosts: () => {},
@@ -48,6 +55,7 @@ const initDispatcher = (dispatch: Dispatch<Action>) => ({
   setLoading: (loading: boolean) => {
     dispatch({ type: 'SET_LOADING', payload: loading });
   },
+
   getPosts: () => {
     console.log('Calling');
     dispatch({ type: 'GET_POSTS_REQUEST' });
@@ -58,7 +66,9 @@ const initDispatcher = (dispatch: Dispatch<Action>) => ({
         console.log({ data });
         dispatch({ type: 'GET_POSTS_SUCCESS', payload: data });
       })
-      .catch((err) => dispatch({ type: 'GET_POSTS_FAILED', payload: err }));
+      .catch((err) =>
+        dispatch({ type: 'GET_POSTS_FAILED', payload: err.message })
+      );
   },
 });
 
@@ -74,5 +84,31 @@ export default function StoreProvider({ children }: Props) {
   );
 }
 
+//****************************
+//           HOOKS           
+//****************************
+
 export const useStore = () => useContext(StoreContext);
 export const useDispatch = () => useContext(DispatchContext);
+
+/**
+ * Should getPosts be it's own function that makes a network request
+ * And the posts statys encapsulated in this local state?
+ *
+ * const [posts, setPosts] = useState([])
+ */
+export const useGetPosts = () => {
+  const { posts, loading } = useStore();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (loading) {
+      dispatch.getPosts();
+    }
+  }, [loading]);
+
+  return {
+    posts,
+    loading,
+  };
+};
