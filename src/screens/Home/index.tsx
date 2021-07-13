@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { FlatList } from 'react-native';
 
 import { useGetPosts } from '../../store';
 
-import { View, Background } from './styles';
+import { HeaderContainer, View, Background } from './styles';
 
 import Image from '../../components/Image';
+import Header from '../../components/Header';
 
 export default function Home() {
   const { posts, loading } = useGetPosts();
@@ -18,15 +19,13 @@ export default function Home() {
   return (
     <View>
       {loading && <Background />}
+      <Header />
 
       <FlatList
         showsVerticalScrollIndicator={false}
         data={posts}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        style={{
-          marginVertical: 40,
-        }}
       />
     </View>
   );

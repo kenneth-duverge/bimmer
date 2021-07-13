@@ -14,7 +14,6 @@ interface Props {
 }
 
 export default function Image({ url, title }: Props) {
-  console.log({ title });
   return (
     <ImageContainer>
       <TitleContainer>

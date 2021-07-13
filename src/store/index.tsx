@@ -57,13 +57,11 @@ const initDispatcher = (dispatch: Dispatch<Action>) => ({
   },
 
   getPosts: () => {
-    console.log('Calling');
     dispatch({ type: 'GET_POSTS_REQUEST' });
 
     actions
       .getPosts(initialState.posts)
       .then((data) => {
-        console.log({ data });
         dispatch({ type: 'GET_POSTS_SUCCESS', payload: data });
       })
       .catch((err) =>

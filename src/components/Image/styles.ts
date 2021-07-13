@@ -16,8 +16,8 @@ export const ImageContainer = styled.View`
 `;
 
 export const TitleContainer = styled.View`
-  width: 180px;
-  height: 44px;
+  width: 160px;
+  height: 40px;
 
   background-color: red;
   border: 2px solid #ffc600;
@@ -33,6 +33,6 @@ export const TitleContainer = styled.View`
 
 export const Text = styled.Text`
   color: white;
-  font-size: 18px;
-
+  font-size: 16px;
+  font-family: 'Shrikhand_400Regular';
 `;
