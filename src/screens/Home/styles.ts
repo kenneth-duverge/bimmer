@@ -1,4 +1,4 @@
-import styled from "styled-components/native";
+import styled from 'styled-components/native';
 
 export const View = styled.SafeAreaView`
   background-color: #ffc600;
@@ -24,4 +24,17 @@ export const Background = styled.SafeAreaView`
   left: 0;
   right: 0;
   background-color: #ffc600;
+`;
+
+export const HeaderContainer = styled.View`
+  width: 100%;
+  height: 50px;
+  align-items: center;
+`;
+
+export const Header = styled.Text`
+  color: #000;
+  height: 100%;
+  font-size: 28px;
+  font-weight: bold;
 `;

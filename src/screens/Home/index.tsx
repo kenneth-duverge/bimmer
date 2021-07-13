@@ -1,33 +1,31 @@
-import React, { useCallback, useEffect } from "react";
-import { FlatList } from "react-native";
+import React, { useCallback } from 'react';
+import { FlatList } from 'react-native';
 
-import { useStore, useDispatch } from "../../store";
+import { useGetPosts } from '../../store';
 
-import { Image, View, Background } from './styles';
+import { HeaderContainer, View, Background } from './styles';
+
+import Image from '../../components/Image';
+import Header from '../../components/Header';
 
 export default function Home() {
-  const { posts, loading } = useStore();
-  const dispatch = useDispatch();
-  const renderItem = useCallback(({ item }) => <Image source={item.url} />, []);
+  const { posts, loading } = useGetPosts();
 
-  useEffect(() => {
-    if (loading) {
-      dispatch.getPosts();
-    }
-  }, [loading]);
+  const renderItem = useCallback(
+    ({ item }) => <Image title={item.title} url={item.url} />,
+    []
+  );
 
   return (
     <View>
       {loading && <Background />}
+      <Header />
 
       <FlatList
         showsVerticalScrollIndicator={false}
         data={posts}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        style={{
-          marginVertical: 40,
-        }}
       />
     </View>
   );
